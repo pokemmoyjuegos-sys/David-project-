@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>¿Plan romántico?</title>
+  <style>
+    :root {
+      --bg: linear-gradient(135deg, #ffd1dc, #ffe4e1);
+      --accent: #ff4081;
+      --text: #4a0033;
+      --white: #fff;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .center {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      box-sizing: border-box;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 720px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 40px rgba(255, 64, 129, 0.2);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: 1.8rem;
+      color: var(--accent);
+    }
+
+    p.note {
+      margin: 0 0 20px;
+      font-size: 1rem;
+      font-style: italic;
+      color: #8b005c;
+    }
+
+    .controls {
+      width: 100%;
+      height: 120px;
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    button {
+      appearance: none;
+      border: none;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      background: var(--accent);
+      color: var(--white);
+      box-shadow: 0 6px 18px rgba(255, 64, 129, 0.3);
+      position: absolute;
+      transition: left 0.2s ease, top 0.2s ease;
+      user-select: none;
+      touch-action: none;
+    }
+
+    #yesBtn {
+      left: 25%;
+      top: 30px;
+    }
+
+    #noBtn {
+      left: 55%;
+      top: 30px;
+    }
+
+    .media {
+      margin-top: 20px;
+    }
+
+    img#characterImg {
+      width: 180px;
+      height: auto;
+      border-radius: 12px;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .message {
+      margin-top: 28px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--accent);
+      min-height: 1.4em;
+    }
+
+    .heart {
+      display: inline-block;
+      animation: beat 1s infinite;
+      transform-origin: center;
+    }
+
+    @keyframes beat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+    }
+
+    .hide {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <main class="center">
+    <section class="card" id="card">
+      <h1 id="titulo">¿Quieres ver una película de miedo mientras comemos hamburguesa con cebolla larga?🥺</h1>
+
+      <div class="controls" id="controlsBox">
+        <button id="yesBtn">Sí 🥰</button>
+        <button id="noBtn">No 😢</button>
+      </div>
+
+      <div class="media">
+        <!-- Enlace directo al gif de terror -->
+        <img id="characterImg" alt="GIF terrorífico" src="https://media.tenor.com/Zi0rwi6n5yoAAAAd/terror.gif">
+      </div>
+
+      <div class="message" id="messageArea"></div>
+    </section>
+  </main>
+
+  <script>
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const msg = document.getElementById('messageArea');
+    const characterImg = document.getElementById('characterImg');
+    const controls = document.getElementById('controlsBox');
+    const titulo = document.getElementById('titulo');
+
+    // Otro gif terrorífico directo
+    const IMG_FELIZ = 'https://media.tenor.com/t2qLV3ttCl4AAAAC/ghost.gif';
+
+    function getRandomPosition(element, container) {
+      const maxX = container.clientWidth - element.offsetWidth;
+      const maxY = container.clientHeight - element.offsetHeight;
+
+      const randomX = Math.floor(Math.random() * maxX);
+      const randomY = Math.floor(Math.random() * maxY);
+
+      return { x: randomX, y: randomY };
+    }
+
+    function moveNoButton() {
+      const { x, y } = getRandomPosition(noBtn, controls);
+      noBtn.style.left = `${x}px`;
+      noBtn.style.top = `${y}px`;
+    }
+
+    noBtn.addEventListener('mouseover', moveNoButton);
+    noBtn.addEventListener('click', moveNoButton);
+    noBtn.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      moveNoButton();
+    });
+
+    yesBtn.addEventListener('click', () => {
+      titulo.classList.add('hide');
+      controls.classList.add('hide');
+
+      msg.innerHTML = 
+      `Sabía que dirías que sí, nos vemos más tarde <span class="heart">💖</span>`;
+      characterImg.src = IMG_FELIZ;
+    });
+  </script>
+</body>
+</html>
